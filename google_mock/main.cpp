@@ -3,6 +3,7 @@
 
 using namespace std;
 using ::testing::Return;
+using ::testing::_;
 
 ACTION(ReturnIncreasingIntegers) {
     cout << "mock!!!!!" << endl;
@@ -11,6 +12,8 @@ ACTION(ReturnIncreasingIntegers) {
 
 class Cat{
 public:
+    virtual ~Cat() = default;
+    virtual void run(const int weight, int speed) = 0;
     virtual int yell(){
         cout << "moew~" << endl;
         return 0;
@@ -22,7 +25,10 @@ public:
 
 class Mocked_Cat: public Cat{
 public:
+    Mocked_Cat(){}
+    ~Mocked_Cat(){}
     MOCK_METHOD0(yell, int());
+    MOCK_METHOD2(run, void(const int, int)); //MEHTOD"2" means 2 parameters
 };
 
 int main(int argc, char** argv){
@@ -36,5 +42,8 @@ int main(int argc, char** argv){
     cout << "after override" << endl;
     cat.fly();
     cat.fly();
+    EXPECT_CALL(cat, run(_, _))
+        .Times(1);
+    cat.run(15, 20);
     printf("THE END");
 }
