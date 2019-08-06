@@ -1,2 +1,6 @@
 __ignore
-
+*.sw[po]
+*.py[ocd]
+*.out
+*.so
+*.a
