@@ -11,14 +11,16 @@ int main(){
     pid_t pid = fork();
     if(pid==0){ // Child
         cout << "Child, pid=" << getpid() << endl;
-        sleep(3);
+        sleep(1);
         cout << "Child, end" << endl;
-        sleep(3);
+        sleep(1);
+        throw;
     }
     else{ // Parent
         cout << "Parent, pid=" << getpid() << endl;
-        wait(NULL);
-        cout << "Parent, stop waiting" << endl;
+        int status(1);
+        wait(&status); // status == 0 if the child process stop normally
+        cout << "Parent, stop waiting, child status=" << status << endl;
 
     }
 
