@@ -1,0 +1,5 @@
+./hello
+gcov hello.cpp
+cat hello.cpp.gcov
+lcov -c -d . --no-external -o result.info
+genhtml result.info
